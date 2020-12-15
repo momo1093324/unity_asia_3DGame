@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 300c0b813f8e1bf44a63185b98bd8a91, type: 3}
+  m_Name: "NPC \u8CC7\u6599\u7B2C\u4E00\u500B\u4EFB\u52D9"
+  m_EditorClassIdentifier: 
+  dialougA: "\u5594\u9F41\u9F41\u5B69\u5B50\uFF0C\u6709\u770B\u5230\u6211\u7684\u8056\u8A95\u896A\u896A\u55CE?\u4ED6\u5011\u7A81\u7136\u4E0D\u898B\u4E86\uFF0C\u5F88\u6015\u72D7\u72D7\u8ECD\u4EBA\u628A\u90A3\u4E9B\u896A\u896A\u53FC\u8D70\u85CF\u8D77\u4F86\uFF0C\u5594\u9F41\u9F41\u7684\u5E0C\u671B\u4F60\u5E6B\u6211\u627E\u4E00\u4E0B\u3002"
+  dialougB: "\u5594\u9F41\u9F41\u5B69\u5B50\uFF0C\u4F3C\u4E4E\u9084\u6709\u96BB\u896A\u896A\u6C92\u627E\u5230\u5594\uFF0C\u5594\u9F41\u9F41!"
+  dialougC: "\u5594\u9F41\u9F41\u5B69\u5B50\uFF0C\u611F\u8B1D\u4F60\u5E6B\u6211\u627E\u5230\u6240\u6709\u896A\u896A!
+    \u5594\u9F41\u9F41! "
+  count: 6
+  countCurrent: 0
