@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections; //引用 系統.集合API(包含協同程序)
 
 public class NPC : MonoBehaviour
 {
@@ -9,16 +10,35 @@ public class NPC : MonoBehaviour
     public GameObject dialog;
     [Header("對話內容")]
     public Text textContent;
+    [Header("對話者名稱")]
+    public Text textName;
+    [Header("間隔對話")]
+    public float interval=0.2f;
 
     //玩家是否進入感應區
     public bool playerInArea;
+   // private void Start()
+   // {
+     //   StartCoroutine(Test());//啟動協同
+    //}
 
+   // private IEnumerator Test()
+    //{
+       // print("嗨/");
+        //yield return new WaitForSeconds(1.5f);
+        //print("嗨/我是1.5秒後...");
+    //}
+    public enum NPCState
+    {
+        FirstDialog,Missioning,Finish
+    }
+    public  NPCState state=NPCState.FirstDialog;
     private void OnTriggerEnter(Collider other)
     {
         if (other.name=="小明")
         {
             playerInArea = true;
-            Dialog();
+            StartCoroutine( Dialog());
         }
     }
     private void OnTriggerExit(Collider other)
@@ -26,10 +46,21 @@ public class NPC : MonoBehaviour
         if (other.name == "小明")
         {
             playerInArea = false;
-
+            stopDialog();
         }
   }
-    private void Dialog()
+   /// <summary>
+   /// 停止對話
+   /// </summary>
+   private void stopDialog()
+    {
+        dialog.SetActive(false);//關閉所有對話框
+        StopAllCoroutines();//停止所有協同
+    }
+   /// <summary>
+   /// 開始對話
+   /// </summary>
+    private IEnumerator Dialog()
     {
         //print(date.dialougA);  取得字串全部資料
         // print(date.dialougA[2]);  取得字串局部資料 ex.[2]為字串第三個字
@@ -39,9 +70,31 @@ public class NPC : MonoBehaviour
         //{
         //    print("我是迴圈:" + i);
         //}
-        for (int i = 0; i < date.dialougA.Length; i++)//Length包含所有文字
+
+        dialog.SetActive(true);//顯示對話框
+        textContent.text=""; //清空文字
+        textName.text = name;//對話者名稱 指定為 此物件的名稱
+
+        string dialogString = date.dialougB;//要說的對話
+
+        switch (state)
         {
-            print(date.dialougA[ i]);
+            case NPCState.FirstDialog:
+                dialogString = date.dialougA;
+                break;
+            case NPCState.Missioning:
+                dialogString = date.dialougB;
+                break;
+            case NPCState.Finish:
+                dialogString = date.dialougC;
+                break;
+        
+        }
+
+        for (int i = 0; i < dialogString.Length; i++)//Length包含所有文字
+        {
+            textContent.text+= dialogString[ i]+"";
+            yield return new WaitForSeconds(interval);
         }
     }
 }
