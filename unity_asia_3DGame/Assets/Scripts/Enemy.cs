@@ -15,6 +15,11 @@ public class Enemy : MonoBehaviour
     [Header("攻擊冷卻時間"), Range(0, 50)]
     public float cd = 2f;
 
+    [Header("攻擊中心點")]
+    public Transform atkPoint;
+    [Header("攻擊長度"),Range(0f,5f)]
+    public float atkLength;
+
     private void Awake()
     {
         nav = GetComponent<NavMeshAgent>();     //取得身上的元件(代理器-狗狗)
@@ -31,6 +36,22 @@ public class Enemy : MonoBehaviour
         Track();
         Attack();
     }
+
+    /// <summary>
+    /// 繪製圖示事件，僅在unity內顯示
+    /// </summary>
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(atkPoint.position, atkPoint.forward* atkLength);
+    }
+
+    /// <summary>
+    /// 射線擊中的物件
+    /// </summary>
+    private RaycastHit hit;
+    
     //攻擊
     private void Attack()
     {
@@ -47,8 +68,16 @@ public class Enemy : MonoBehaviour
             {
             ani.SetTrigger("攻擊開關");
                 timer = 0;
+
+                //物理 射線碰撞(中心點座標，中心點前方，射線擊中的物件out，攻擊長度，圖層)
+                //圖層 1<<8     8為玩家新設圖層
+                //如果射線大道物歉疚執行{}
+                if (Physics.Raycast(atkPoint.position, atkPoint.forward,out hit, atkLength, 1 << 8))
+                {
+                    //碰撞物件.取得元件<玩家>(),受傷()
+                    hit.collider.GetComponent<Player>().Damage();
             }
-          
+            }
         }
     }
     //追蹤
@@ -59,3 +88,4 @@ public class Enemy : MonoBehaviour
         ani.SetBool("跑步開關", nav.remainingDistance > stopDistance);
     }
 }
+
